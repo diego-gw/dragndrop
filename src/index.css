@@ -6,8 +6,59 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+* {
+  margin: 0;
+  box-sizing: content-box;
+}
+.main-page {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto;
+}
+.sidebar-holder {
+  height: 100%;
+  width: 15vw;
+  background-color: aquamarine;
+  padding: 10px;
+}
+.sidebar {
+  grid-column: 1;
+  margin: auto;
+  width: 100%;
+  height: 80%;
+  border-radius: 10px;
+  background-color: lightblue;
+}
+.canvas-holder {
+  grid-column: 2;
+  background-color: aquamarine;
+  width: 85vw;
+  padding: 10px;
+  height: 100%;
+}
+.canvas {
+  background-color: lightblue;
+  border-radius: 10px;
+  width: 100%;
+  height: 80%;
+}
+.note-holder {
+  background-color: red;
+  z-index: 50;
+  border: 2px solid black;
+}
+.resize-button {
+  background-color: blue;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
