@@ -32,19 +32,20 @@ class CanvasClass extends React.Component {
             const xCursor = e.pageX;
             const yCursor =e.pageY;
             const noteTested = this.notesPropsArray[i];
-            const minX = noteTested.x;
-            const minY = noteTested.y;
-            const maxX = minX + noteTested.width;
-            const maxY = minY + noteTested.height;
+            const minX = noteTested.x-5;
+            const minY = noteTested.y-5;
+            const maxX = minX + noteTested.width+10;
+            const maxY = minY + noteTested.height+10;
             // if a note is identified we directly return without doing anything
             if (xCursor >= minX && xCursor <= maxX && yCursor >= minY && yCursor <= maxY) return;
         }
-        this.initialCursorX = e.pageX-2;
-        this.initialCursorY = e.pageY-2;
-        this.initialWidth = 10;
-        this.initialHeight = 10;
+        this.initialCursorX = e.pageX;
+        this.initialCursorY = e.pageY;
+        this.initialX = e.pageX-2;
+        this.initialY = e.pageY-2;
+        this.initialWidth = 15;
+        this.initialHeight = 15;
         this.event= "resize";
-        
         
         const newNoteProps = {
             key: this.state.numberOfNotes+1,
@@ -60,8 +61,7 @@ class CanvasClass extends React.Component {
     }
 
     moveNote = (e) => {
-        //console.log(e.target);
-
+        //console.log(e.target)
         if(this.event === "move" && this.clickedNoteIndex >= 0) {
             //console.log("found note "+this.notesPropsArray[this.clickedNoteIndex].key);
             this.deltaX = e.pageX - this.initialCursorX;
@@ -74,7 +74,7 @@ class CanvasClass extends React.Component {
         }
         //RESIZING CODE
         if(this.event === "resize" && this.clickedNoteIndex >= 0) {
-            console.log("found note "+this.notesPropsArray[this.clickedNoteIndex].key);
+            //console.log("found note "+this.notesPropsArray[this.clickedNoteIndex].key);
             if(e.pageX > this.initialX && e.pageY > this.initialY) {
                 this.deltaX = e.pageX - this.initialCursorX;
                 this.deltaY = e.pageY - this.initialCursorY;
@@ -103,17 +103,14 @@ class CanvasClass extends React.Component {
     clickNote = (key, startingX, startingY, event) => {   
         
         this.setState({clickedNote: key});
-
         this.event = event;
         console.log(event);
 
         this.clickedNoteIndex = this.notesPropsArray.findIndex((note) => note.key === key);
         //console.log("note found at index "+this.clickedNoteIndex);
-
         // Initial position of the note
         this.initialX = this.notesPropsArray[this.clickedNoteIndex].x;
         this.initialY = this.notesPropsArray[this.clickedNoteIndex].y;
-
         // If event is resize we store the initial width and height of the note
         this.initialWidth = this.notesPropsArray[this.clickedNoteIndex].width;
         this.initialHeight = this.notesPropsArray[this.clickedNoteIndex].height;
@@ -124,29 +121,23 @@ class CanvasClass extends React.Component {
         this.initialCursorY = startingY;
     }
     unclickNote = () => {
+
+        if (this.event === "delete") {
+            this.notesPropsArray.splice(this.clickedNoteIndex, 1);
+        }
+
         this.setState({clickedNote: 0});
         this.clickedNoteIndex=-1;
+        
         this.event = "";
         this.initialX = 0;
         this.initialY = 0;
         this.initialWidth = 10;
         this.initialHeight = 10;
-        
         //console.log("clicked state resetted to "+this.state.clickedNote);
     }
 
     render () {
-        
-        /*
-        const testNote = {
-            key: 1,
-            x: 400,
-            y: 200,
-            width: this.defaultWidth,
-            height: this.defaultHeight,
-        }
-        this.notesPropsArray.push(testNote);
-        */
 
         return (
             <div className="canvas-holder">

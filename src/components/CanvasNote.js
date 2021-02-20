@@ -9,17 +9,25 @@ export default function CanvasNote(props) {
         width: noteProps.width+"px",
         height: noteProps.height+"px",
     };
-    const resizeButtonStyle = {
-        position: "absolute",
-        bottom: "0",
-        right: "0",
-    }
+    const titleHolderStyle = {
+        width: (noteProps.width-20)+"px",
+        height: "15px",
+        display: (noteProps.width > 30 && noteProps.height > 15 ? "block" : "none"),
+    };
+    const titlePlaceHolder = `Note ${noteProps.key}`
+    const noteContentStyle = {
+        width: (noteProps.width-20)+"px",
+        height: (noteProps.height-30)+"px",
+        display: (noteProps.width > 50 && noteProps.height > 42 ? "block" : "none"),
+    };
 
     const onMouseDown = (e) => {
         //console.log(noteProps.key);
         let event = "";
         if(e.pageX > noteProps.x + noteProps.width - 10 && e.pageY > noteProps.y + noteProps.height - 10) {
             event = "resize";
+        } else if (e.pageX > noteProps.x + noteProps.width - 10 && e.pageY < noteProps.y + 10) {
+            event = "delete";
         } else {
             event = "move";
         }
@@ -38,11 +46,10 @@ export default function CanvasNote(props) {
             onMouseUp={onMouseUp}>
 
             <div className="note">
-                Note {noteProps.key}
-                {/*<button 
-                    style={resizeButtonStyle}
-                    onMouseDown={(e) => onMouseDown(e, "resize")}
-                onMouseUp={onMouseUp}></button>*/}
+                <input type="text" className="note-title" placeholder={titlePlaceHolder} style={titleHolderStyle} ></input>
+                <textarea className="note-content" placeholder="Content" style={noteContentStyle} />
+                
+                <div className="delete-button"></div>
                 <div className="resize-button"></div>
             </div>
         </div>

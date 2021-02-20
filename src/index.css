@@ -50,7 +50,7 @@ code {
   height: 80%;
 }
 .note-holder {
-  background-color: red;
+  background-color: lightcoral;
   z-index: 50;
   border: 2px solid black;
 }
@@ -61,4 +61,27 @@ code {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+.delete-button {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.note-title {
+  background-color: transparent;
+  width: 10px;
+  border: 1px solid black;
+}
+.note-title:focus {
+  border: none;
+  background-color: blanchedalmond;
+  border-radius: 0;
+  margin-left: 1px;
+}
+.note-content {
+  background-color: transparent;
+  margin-top: 2px;
 }
